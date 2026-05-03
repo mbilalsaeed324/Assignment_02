@@ -1,0 +1,49 @@
+name: Node.js CI Workflow
+
+on:
+  push:
+
+# Set the environment variable at the workflow level to opt into Node 24
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: a1s2z3x4
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4 # Check for v5 if available
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4 # Check for v5 if available
+      with:
+        node-version: '24' # Update your project to run on Node 24
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      env:
+        NODE_ENV: test
+        DB_HOST: localhost
+        DB_PORT: 5432
+        DB_USER: postgres
+        DB_PASSWORD: a1s2z3x4
+        DB_NAME: test_db
+      run: npm test

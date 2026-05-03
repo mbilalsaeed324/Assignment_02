@@ -1,0 +1,23 @@
+{
+  "name": "assignment-project",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "cross-env NODE_ENV=test cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles --forceExit"
+  },
+  "author": "Muhammad Bilal Saeed",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "jest": "^30.3.0",
+    "supertest": "^7.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.20.0",
+    "typeorm": "^0.3.28"
+  }
+}
